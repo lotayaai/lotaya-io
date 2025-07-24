@@ -1,0 +1,665 @@
+openapi: 3.0.0
+info:
+  title: Lotaya AI API
+  description: API for Lotaya AI platform, enabling AI-powered design asset generation.
+  version: 1.0.0
+  contact:
+    name: Lotaya AI Support
+    email: support@lotaya.io
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.lotaya.io
+    description: Production Server
+  - url: http://localhost:8001
+    description: Local Development Server
+
+paths:
+  /api/:
+    get:
+      summary: Health check endpoint
+      operationId: healthCheck
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello World"
+      tags:
+        - Health
+
+  /api/generate-logo:
+    post:
+      summary: Generate a professional logo
+      operationId: generateLogo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoGenerationRequest'
+      responses:
+        '200':
+          description: Logo generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      tags:
+        - Logo Generation
+
+  /api/generate-video:
+    post:
+      summary: Generate AI-powered video content
+      operationId: generateVideo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoGenerationRequest'
+      responses:
+        '200':
+          description: Video generation initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Video Generation
+
+  /api/generate-brand-kit:
+    post:
+      summary: Generate complete brand identity package
+      operationId: generateBrandKit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandKitRequest'
+      responses:
+        '200':
+          description: Brand kit generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Brand Kit
+
+  /api/generate-social-content:
+    post:
+      summary: Generate social media content
+      operationId: generateSocialContent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialContentRequest'
+      responses:
+        '200':
+          description: Social content generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Social Media
+
+  /api/chat-assistant:
+    post:
+      summary: AI chat assistant for creative guidance
+      operationId: chatAssistant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Chat response generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+      tags:
+        - AI Assistant
+
+  /api/generate-website:
+    post:
+      summary: Generate website concept and layout
+      operationId: generateWebsite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebsiteRequest'
+      responses:
+        '200':
+          description: Website concept generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Website Generator
+
+  /api/generate-voice:
+    post:
+      summary: Convert text to lifelike speech
+      operationId: generateVoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceRequest'
+      responses:
+        '200':
+          description: Voice generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Voice Generation
+
+  /api/edit-photo:
+    post:
+      summary: AI-powered photo editing and enhancement
+      operationId: editPhoto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PhotoEditRequest'
+      responses:
+        '200':
+          description: Photo editing completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Photo Editor
+
+  /api/remove-background:
+    post:
+      summary: Remove background from images
+      operationId: removeBackground
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundRemovalRequest'
+      responses:
+        '200':
+          description: Background removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Background Remover
+
+  /api/generate-domain:
+    post:
+      summary: Generate domain name suggestions
+      operationId: generateDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainRequest'
+      responses:
+        '200':
+          description: Domain suggestions generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainResponse'
+      tags:
+        - Domain Generator
+
+  /api/generate-slogan:
+    post:
+      summary: Create catchy brand slogans
+      operationId: generateSlogan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SloganRequest'
+      responses:
+        '200':
+          description: Slogans generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SloganResponse'
+      tags:
+        - Slogan Maker
+
+  /api/generate-business-card:
+    post:
+      summary: Design professional business cards
+      operationId: generateBusinessCard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessCardRequest'
+      responses:
+        '200':
+          description: Business card designed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationResponse'
+      tags:
+        - Business Cards
+
+components:
+  schemas:
+    LogoGenerationRequest:
+      type: object
+      required:
+        - brandName
+        - keywords
+      properties:
+        brandName:
+          type: string
+          example: "Lotaya AI"
+          description: "Name of the brand or company"
+        keywords:
+          type: array
+          items:
+            type: string
+          example: ["AI", "design", "creative", "technology"]
+          description: "Keywords that describe the brand"
+        industry:
+          type: string
+          example: "Technology"
+          description: "Industry or business sector"
+        colorPalette:
+          type: array
+          items:
+            type: string
+          example: ["#1A73E8", "#FBBC05", "#34A853"]
+          description: "Preferred color palette (hex colors)"
+        style:
+          type: string
+          enum: [modern, classic, minimalist, abstract, playful]
+          example: "modern"
+          description: "Design style preference"
+
+    VideoGenerationRequest:
+      type: object
+      required:
+        - prompt
+      properties:
+        prompt:
+          type: string
+          example: "A futuristic cityscape with flying cars at sunset, cinematic style"
+          description: "Text description for video generation"
+        durationSeconds:
+          type: integer
+          format: int32
+          example: 15
+          minimum: 5
+          maximum: 60
+          description: "Video duration in seconds"
+        style:
+          type: string
+          enum: [cinematic, documentary, commercial, artistic]
+          example: "cinematic"
+          description: "Video style preference"
+        resolution:
+          type: string
+          enum: [480p, 720p, 1080p, 4k]
+          example: "1080p"
+          description: "Video resolution"
+
+    BrandKitRequest:
+      type: object
+      required:
+        - brandName
+        - industry
+      properties:
+        brandName:
+          type: string
+          example: "Innovative Tech"
+        industry:
+          type: string
+          example: "Technology"
+        brandPersonality:
+          type: array
+          items:
+            type: string
+          example: ["innovative", "trustworthy", "modern"]
+        targetAudience:
+          type: string
+          example: "Tech professionals and entrepreneurs"
+
+    SocialContentRequest:
+      type: object
+      required:
+        - platform
+        - contentType
+        - topic
+      properties:
+        platform:
+          type: string
+          enum: [instagram, facebook, twitter, linkedin, tiktok]
+          example: "instagram"
+        contentType:
+          type: string
+          enum: [post, story, banner, cover]
+          example: "post"
+        topic:
+          type: string
+          example: "AI innovation in 2025"
+        tone:
+          type: string
+          enum: [professional, casual, energetic, informative]
+          example: "professional"
+
+    ChatRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: "I need help creating a brand identity for my startup"
+        context:
+          type: string
+          example: "Previous conversation about logo design"
+
+    WebsiteRequest:
+      type: object
+      required:
+        - businessName
+        - businessType
+      properties:
+        businessName:
+          type: string
+          example: "Lotaya AI"
+        businessType:
+          type: string
+          example: "AI Software Company"
+        pages:
+          type: array
+          items:
+            type: string
+          example: ["home", "about", "services", "contact"]
+        colorScheme:
+          type: string
+          enum: [modern, classic, vibrant, minimal]
+          example: "modern"
+
+    VoiceRequest:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          example: "Welcome to Lotaya AI, your creative partner in design"
+        voice:
+          type: string
+          enum: [male, female, neutral]
+          example: "female"
+        language:
+          type: string
+          example: "en-US"
+        speed:
+          type: number
+          format: float
+          example: 1.0
+          minimum: 0.5
+          maximum: 2.0
+
+    PhotoEditRequest:
+      type: object
+      required:
+        - imageUrl
+        - editType
+      properties:
+        imageUrl:
+          type: string
+          format: url
+          example: "https://example.com/image.jpg"
+        editType:
+          type: string
+          enum: [enhance, upscale, colorize, restore]
+          example: "enhance"
+        intensity:
+          type: number
+          format: float
+          example: 0.8
+          minimum: 0.1
+          maximum: 1.0
+
+    BackgroundRemovalRequest:
+      type: object
+      required:
+        - imageUrl
+      properties:
+        imageUrl:
+          type: string
+          format: url
+          example: "https://example.com/image.jpg"
+
+    DomainRequest:
+      type: object
+      required:
+        - keywords
+      properties:
+        keywords:
+          type: array
+          items:
+            type: string
+          example: ["AI", "design", "creative"]
+        extensions:
+          type: array
+          items:
+            type: string
+          example: [".com", ".io", ".ai"]
+
+    SloganRequest:
+      type: object
+      required:
+        - brandName
+        - industry
+      properties:
+        brandName:
+          type: string
+          example: "Lotaya AI"
+        industry:
+          type: string
+          example: "Technology"
+        tone:
+          type: string
+          enum: [professional, playful, inspiring, bold]
+          example: "inspiring"
+
+    BusinessCardRequest:
+      type: object
+      required:
+        - name
+        - title
+        - company
+      properties:
+        name:
+          type: string
+          example: "John Doe"
+        title:
+          type: string
+          example: "CEO & Founder"
+        company:
+          type: string
+          example: "Lotaya AI"
+        email:
+          type: string
+          format: email
+          example: "john@lotaya.ai"
+        phone:
+          type: string
+          example: "+1 (555) 123-4567"
+        website:
+          type: string
+          format: url
+          example: "https://lotaya.ai"
+        style:
+          type: string
+          enum: [modern, classic, creative, minimal]
+          example: "modern"
+
+    GenerationResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: "job_abc123def456"
+          description: "Unique identifier for the generation job"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          example: "completed"
+          description: "Current status of the generation job"
+        message:
+          type: string
+          example: "Logo generated successfully"
+          description: "Human-readable status message"
+        assetUrl:
+          type: string
+          format: url
+          nullable: true
+          example: "https://storage.googleapis.com/lotaya-assets/logos/abc123.png"
+          description: "URL to the generated asset (when completed)"
+        metadata:
+          type: object
+          nullable: true
+          description: "Additional metadata about the generated asset"
+
+    ChatResponse:
+      type: object
+      properties:
+        response:
+          type: string
+          example: "I'd be happy to help you create a brand identity! Let's start with your business concept..."
+        suggestions:
+          type: array
+          items:
+            type: string
+          example: ["Tell me about your target audience", "What industry are you in?"]
+
+    DomainResponse:
+      type: object
+      properties:
+        suggestions:
+          type: array
+          items:
+            type: object
+            properties:
+              domain:
+                type: string
+                example: "lotayaai.com"
+              available:
+                type: boolean
+                example: true
+              price:
+                type: string
+                example: "$12.99/year"
+
+    SloganResponse:
+      type: object
+      properties:
+        slogans:
+          type: array
+          items:
+            type: string
+          example: ["Unleash Your Creativity", "Design Beyond Imagination", "AI-Powered Innovation"]
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "INVALID_INPUT"
+          description: "Error code for programmatic handling"
+        message:
+          type: string
+          example: "The provided brand name is too short"
+          description: "Human-readable error message"
+        details:
+          type: string
+          nullable: true
+          description: "Additional error details"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "JWT token for API authentication"
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Health
+    description: Health check and system status endpoints
+  - name: Logo Generation
+    description: Professional logo creation and branding
+  - name: Video Generation
+    description: AI-powered video content creation
+  - name: Brand Kit
+    description: Complete brand identity packages
+  - name: Social Media
+    description: Social media content generation
+  - name: AI Assistant
+    description: Creative guidance and chat assistance
+  - name: Website Generator
+    description: Website concept and layout generation
+  - name: Voice Generation
+    description: Text-to-speech conversion
+  - name: Photo Editor
+    description: AI-powered photo editing and enhancement
+  - name: Background Remover
+    description: Automatic background removal
+  - name: Domain Generator
+    description: Domain name suggestion and availability
+  - name: Slogan Maker
+    description: Brand tagline and slogan creation
+  - name: Business Cards
+    description: Professional business card design
